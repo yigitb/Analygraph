@@ -19,11 +19,6 @@
 
 #define LOOPS 20
 
-/**
-	FreeImage error handler
-	@param fif Format / Plugin responsible for the error
-	@param message Error message
-*/
 void FreeImageErrorHandler(FREE_IMAGE_FORMAT fif, const char* message) {
 	printf("\n*** ");
 	if (fif != FIF_UNKNOWN) {
@@ -42,18 +37,14 @@ std::unique_ptr<Image> timed_compute(IAnalygraph &f, const Image* l, const Image
 	auto end = std::chrono::steady_clock::now();
 
 	if (ret)
-		printf("something went wrong, calculation is probably wrong\n");
+		printf("something went wrong, output/timing is probably wrong\n");
 	std::chrono::duration<double> time = end - start;
 	printf("operation took %f seconds\n", time.count() / LOOPS);
 	return f.GetImage();
 }
 
 int main(int argc, char* argv[]) {
-	// initialize your own FreeImage error handler
-
 	FreeImage_SetOutputMessage(FreeImageErrorHandler);
-
-	// print version & copyright infos
 
 	printf(FreeImage_GetVersion());
 	printf("\n");
@@ -110,14 +101,3 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
